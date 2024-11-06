@@ -51,7 +51,7 @@ else
     echo -e "roboshop user already exist $Y SKIPPING $N"
 fi  
 
-useradd roboshop 
+#useradd roboshop 
 
 VALIDATE $? "creating roboshop user"
 
@@ -59,36 +59,35 @@ mkdir -p /app &>> $LOGFILE
 
 VALIDATE $? "creating app directory"
 
-curl -o /tmp/catalogue.zip https://roboshop-builds.s3.amazonaws.com/catalogue.zip &>> $LOGFILE
+curl -o /tmp/user.zip https://roboshop-builds.s3.amazonaws.com/user.zip &>> $LOGFILE
 
-VALIDATE $? "downloading catalogue application"
+VALIDATE $? "downloading user application"
 
 cd /app &>> $LOGFILE
 
 unzip -o /tmp/catalogue.zip &>> $LOGFILE
 
-VALIDATE $? "unzipping catalogue application" 
+VALIDATE $? "unzipping user" 
 
 npm install &>> $LOGFILE
 
 VALIDATE $? "installing dependencies"
 
-#use absolute path 
-cp /home/centos/roboshop-shell/catalogue.service /etc/systemd/system/catalogue.service &>> $LOGFILE
+cp /home/centos/roboshop-shell/user.service /etc/systemd/system/user.service
 
-VALIDATE $? "coping catalogue file" 
+VALIDATE $? "copy user file"
 
-systemctl daemon-reload &>> $LOGFILE
+systemctl daemon-reload
 
-VALIDATE $? "daemon-reload catalogue" 
+VALIDATE $? "deamon-reload"
 
-systemctl enable catalogue &>> $LOGFILE
+systemctl enable user 
 
-VALIDATE $? "enabiling catalogue" 
+VALIDATE $? "enable user"
 
-systemctl start catalogue &>> $LOGFILE
+systemctl start user
 
-VALIDATE $? "starting catalogue" 
+VALIDATE $? "start user"
 
 cp /home/centos/roboshop-shell/mongo.repo /etc/yum.repos.d/mongo.repo &>> $LOGFILE
 
@@ -98,8 +97,6 @@ dnf install mongodb-org-shell -y &>> $LOGFILE
 
 VALIDATE $? "installing mongodb client" 
 
-mongo --host $MONGODB_HOST</app/schema/catalogue.js &>> $LOGFILE
+mongo --host $MONGODB_HOST</app/schema/user.js &>> $LOGFILE
 
-VALIDATE $? "loading catalogue date into mongodb" 
-
-
+VALIDATE $? "loading user data into mongodb" 
