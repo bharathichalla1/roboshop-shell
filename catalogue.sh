@@ -32,65 +32,65 @@ fi
 
 dnf module disable nodejs -y &>> $LOGFILE
 
-validate $? "disabiling current nodejs" 
+VALIDATE $? "disabiling current nodejs" 
 
 dnf module enable nodejs:18 -y &>> $LOGFILE
 
-validate $? "enabiling  nodejs" 
+VALIDATE $? "enabiling  nodejs" 
 
 dnf install nodejs -y &>> $LOGFILE
 
-validate $? "installing nodejs" 
+VALIDATE $? "installing nodejs" 
 
 useradd roboshop &>> $LOGFILE
 
-validate $? "creating roboshop user"
+VALIDATE $? "creating roboshop user"
 
 mkdir /app &>> $LOGFILE
 
-validate $? "creating app directory"
+VALIDATE $? "creating app directory"
 
 curl -o /tmp/catalogue.zip https://roboshop-builds.s3.amazonaws.com/catalogue.zip &>> $LOGFILE
 
-validate $? "downloading catalogue application"
+VALIDATE $? "downloading catalogue application"
 
 cd /app &>> $LOGFILE
 
 unzip /tmp/catalogue.zip &>> $LOGFILE
 
-validate $? "unzipping catalogue application" 
+VALIDATE $? "unzipping catalogue application" 
 
 npm install &>> $LOGFILE
 
-validate $? "installing dependencies"
+VALIDATE $? "installing dependencies"
 
 #use absolute path 
 cp /home/centos/roboshop-shell/catalogue.service /etc/systemd/system/catalogue.service &>> $LOGFILE
 
-validate $? "coping catalogue file" 
+VALIDATE $? "coping catalogue file" 
 
 systemctl daemon-reload &>> $LOGFILE
 
-validate $? "daemon-reload catalogue" 
+VALIDATE $? "daemon-reload catalogue" 
 
 systemctl enable catalogue &>> $LOGFILE
 
-validate $? "enabiling catalogue" 
+VALIDATE $? "enabiling catalogue" 
 
 systemctl start catalogue &>> $LOGFILE
 
-validate $? "starting catalogue" 
+VALIDATE $? "starting catalogue" 
 
 cp /home/centos/roboshop-shell/mongo.repo /etc/yum.repos.d/mongo.repo &>> $LOGFILE
 
-validate $? "coping mongorepo" 
+VALIDATE $? "coping mongorepo" 
 
 dnf install mongodb-org-shell -y &>> $LOGFILE
 
-validate $? "installing mongodb client" 
+VALIDATE $? "installing mongodb client" 
 
 mongo --host $MONGODB_HOST</app/schema/catalogue.js &>> $LOGFILE
 
-validate $? "loading catalogue date into mongodb" 
+VALIDATE $? "loading catalogue date into mongodb" 
 
 
