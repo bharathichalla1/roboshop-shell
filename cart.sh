@@ -51,8 +51,6 @@ else
     echo -e "roboshop user already exist $Y SKIPPING $N"
 fi  
 
-useradd roboshop 
-
 VALIDATE $? "creating roboshop user"
 
 mkdir -p /app &>> $LOGFILE
@@ -82,7 +80,7 @@ systemctl daemon-reload &>> $LOGFILE
 
 VALIDATE $? "daemon-reload cart" 
 
-systemctl enable cart &>> $LOGFILE
+systemctl Enable cart &>> $LOGFILE
 
 VALIDATE $? "enabiling cart" 
 
