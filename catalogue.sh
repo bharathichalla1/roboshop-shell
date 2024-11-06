@@ -51,7 +51,7 @@ else
     echo -e "roboshop user already exist $Y SKIPPING $N"
 fi  
 
-useradd roboshop 
+#useradd roboshop 
 
 VALIDATE $? "creating roboshop user"
 
